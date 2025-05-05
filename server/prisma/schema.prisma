@@ -10,6 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Role {
+  id        Int      @id @default(autoincrement())
+  CreatedAt DateTime @default(now()) @map("created_at")
+  UpdatedAt DateTime @updatedAt() @map("updated_at")
+
+  code String
+  name String
+  User User[]
+
+  @@map("role")
+}
+
 model User {
   id       Int     @id @default(autoincrement())
   login    String? @unique
@@ -20,4 +32,6 @@ model User {
 
   CreatedAt DateTime @default(now()) @map("created_at")
   UpdatedAt DateTime @updatedAt @map("updated_at")
+  Role      Role     @relation(fields: [roleId], references: [id])
+  roleId    Int      @default(0)
 }

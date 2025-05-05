@@ -27,7 +27,8 @@ export interface IUser {
 	email: string;
 	number: string;
 	password: string;
-	login?: string;
+	login: string;
+	role: number;
 	CreatedAt: string;
 	UpdatedAt: string;
 }
@@ -36,8 +37,9 @@ export interface IAuthResponse {
 	id: number;
 	name: string;
 	email: string;
-	login?: string;
+	login: string;
 	number: string;
+	role: number;
 	password: string;
 	CreatedAt: string;
 	UpdatedAt: string;

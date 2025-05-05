@@ -16,7 +16,7 @@ export class AuthService {
     private userService: UserService,
   ) {}
 
-  async login(dto: AuthDto) {
+  public async login(dto: AuthDto) {
     const { password, ...user } = await this.validateUser(dto);
     const tokens = this.issueToken(user.id);
 
@@ -26,7 +26,7 @@ export class AuthService {
     };
   }
 
-  async register(dto: RegisterAuth) {
+  public async register(dto: RegisterAuth) {
     const { password, ...user } = await this.userService.create(dto);
     const tokens = this.issueToken(user.id);
 

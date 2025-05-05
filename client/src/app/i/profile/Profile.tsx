@@ -1,8 +1,8 @@
 "use client";
 import { DASHBOARD_PAGES } from "@/config/pages-url.config";
 import { useProfile } from "@/hook/useProfile";
-import { isAdminAtom, isAuthAtom } from "@/jotai/auth";
 import { authService } from "@/service/auth.service";
+import { isAdminAtom, isAuthAtom } from "@/store/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useAtom } from "jotai";
 import Cookies from "js-cookie";
