@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { CurrentUser } from 'src/auth/decorators/user.decorator';
-import { Auth } from '../auth/decorators/auth.decorator';
+import { CurrentUser } from 'src/decorators/user.decorator';
+import { Auth } from '../decorators/auth.decorator';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -11,7 +11,7 @@ export class UserController {
   // GET localhost:5555/api/user/users
   @Get('/users')
   @Auth()
-  async getByUsers(): Promise<User[]> {
+  public async getByUsers(): Promise<User[]> {
     return await this.userService.getByAll();
   }
 
@@ -19,14 +19,14 @@ export class UserController {
   // GET localhost:5555/api/user/user_id
   @Get('/user_id')
   @Auth()
-  async getById(@CurrentUser('id') id: number): Promise<User> {
+  public async getById(@CurrentUser('id') id: number): Promise<User> {
     console.log(id);
     return await this.userService.getById(id);
   }
 
   @Get('/login')
   @Auth()
-  async getByLogin(@CurrentUser('login') login: string): Promise<User> {
+  public async getByLogin(@CurrentUser('login') login: string): Promise<User> {
     console.log(login);
     return await this.userService.getByLogin(login);
   }

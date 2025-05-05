@@ -22,7 +22,10 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Post('login')
-  async login(@Body() dto: AuthDto, @Res({ passthrough: true }) res: Response) {
+  public async login(
+    @Body() dto: AuthDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
     const { refreshToken, ...response } = await this.authService.login(dto);
     this.authService.addRefreshTokenToResponse(res, refreshToken);
 
@@ -33,7 +36,7 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Post('register')
-  async register(
+  public async register(
     @Body() dto: RegisterAuth,
     @Res({ passthrough: true }) res: Response,
   ) {
@@ -46,7 +49,7 @@ export class AuthController {
   // Создание нового токена
   @HttpCode(200)
   @Post('login/access-token')
-  async getNewTokens(
+  public async getNewTokens(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ) {
@@ -70,7 +73,7 @@ export class AuthController {
   // Выход из системы
   @HttpCode(200)
   @Post('logout')
-  async logout(@Res({ passthrough: true }) res: Response) {
+  public async logout(@Res({ passthrough: true }) res: Response) {
     this.authService.removeRefreshTokenToResponse(res);
     return true;
   }

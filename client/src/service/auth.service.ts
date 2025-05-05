@@ -7,8 +7,8 @@ export enum EnumTokens {
 	"REFRESH_TOKEN" = "refreshToken",
 }
 
-export const authService = {
-	async loginMain(data: IAuthForm) {
+class AuthService {
+	public async loginMain(data: IAuthForm) {
 		const response = await axiosClassic.post<IAuthResponse>(
 			`/auth/login`,
 			data
@@ -17,18 +17,18 @@ export const authService = {
 		if (response.data.accessToken) saveTokenStorage(response.data.accessToken);
 		console.log(response);
 		return response;
-	},
+	}
 
-	async registerMain(data: IRegForm) {
+	public async registerMain(data: IRegForm) {
 		const response = await axiosClassic.post<IAuthResponse>(
 			`/auth/register`,
 			data
 		);
 
 		return response;
-	},
+	}
 
-	async getNewTokens() {
+	public async getNewTokens() {
 		const response = await axiosClassic.post<IAuthResponse>(
 			`/auth/login/access-token`
 		);
@@ -36,13 +36,15 @@ export const authService = {
 		if (response.data.accessToken) saveTokenStorage(response.data.accessToken);
 
 		return response;
-	},
+	}
 
-	async logout() {
+	public async logout() {
 		const response = await axiosClassic.post<boolean>("auth/logout");
 
 		if (response.data) removeFromStorage();
 
 		return response;
-	},
-};
+	}
+}
+
+export const authService = new AuthService();

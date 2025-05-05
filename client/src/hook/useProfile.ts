@@ -1,5 +1,5 @@
-import { isAuthAtom } from "@/jotai/auth";
 import { userService } from "@/service/user.service";
+import { isAuthAtom } from "@/store/auth";
 import { useQuery } from "@tanstack/react-query";
 import { useAtom } from "jotai";
 import { useEffect } from "react";

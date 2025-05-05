@@ -8,7 +8,7 @@ import { RegisterUser } from './dto/register.dto';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async create(dto: RegisterUser): Promise<User> {
+  public async create(dto: RegisterUser): Promise<User> {
     return await this.prisma.user.create({
       data: {
         name: dto.name,
@@ -20,11 +20,11 @@ export class UserService {
     });
   }
 
-  async getByAll(): Promise<User[]> {
+  public async getByAll(): Promise<User[]> {
     return await this.prisma.user.findMany();
   }
 
-  async getById(id: number) {
+  public async getById(id: number) {
     return this.prisma.user.findUnique({
       where: {
         id,
@@ -32,7 +32,7 @@ export class UserService {
     });
   }
 
-  async getByEmail(email: string) {
+  public async getByEmail(email: string) {
     return this.prisma.user.findUnique({
       where: {
         email,
@@ -40,7 +40,7 @@ export class UserService {
     });
   }
 
-  async getByLogin(login: string) {
+  public async getByLogin(login: string) {
     return this.prisma.user.findUnique({
       where: {
         login,
