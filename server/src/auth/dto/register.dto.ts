@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class RegisterAuth {
   @IsString()
@@ -13,7 +13,6 @@ export class RegisterAuth {
   @IsString()
   email: string;
 
-  @IsOptional()
   @IsString()
-  login?: string;
+  login: string;
 }

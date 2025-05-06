@@ -2,8 +2,10 @@
 
 import { DASHBOARD_PAGES } from "@/config/pages-url.config";
 import { authService } from "@/service/auth.service";
+import { isAdminAtom, isAuthAtom } from "@/store/auth";
 import { IAuthForm } from "@/types/auth.types";
 import { useMutation } from "@tanstack/react-query";
+import { useSetAtom } from "jotai";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -20,6 +22,9 @@ export const Authorization = () => {
 		mode: "onChange",
 	});
 
+	const setIsAuth = useSetAtom(isAuthAtom);
+	const setIsAdmin = useSetAtom(isAdminAtom);
+
 	// хук для редиректа
 	const { push } = useRouter();
 
@@ -27,10 +32,19 @@ export const Authorization = () => {
 	const { mutate } = useMutation({
 		mutationKey: ["auth"],
 		mutationFn: (data: IAuthForm) => authService.loginMain(data),
-		onSuccess: () => {
+		onSuccess: response => {
 			toast.success("Авторизация прошла успешно");
 			reset();
-			push(DASHBOARD_PAGES.PROFILE);
+			setIsAuth(true);
+
+			console.log(response.data.user.roleId);
+
+			if (response.data.user.roleId === 2) {
+				setIsAdmin(true);
+				push(DASHBOARD_PAGES.ADMIN_PANEL);
+			} else {
+				push(DASHBOARD_PAGES.PROFILE);
+			}
 		},
 		onError: error => {
 			toast.error("Произошла ошибка!");
@@ -45,12 +59,12 @@ export const Authorization = () => {
 
 	return (
 		<div className='min-h-screen flex items-center justify-center'>
-			<div className='w-full max-w-md p-8 space-y-3  backdrop-blur-lg'>
+			<div className='w-full max-w-md p-8 space-y-3  backdrop-blur-lg text-black'>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<input
 						type='text'
-						placeholder='почта'
-						{...register("email", { required: true })}
+						placeholder='Логин'
+						{...register("login", { required: true })}
 					/>
 					<input
 						type='text'

@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { verify } from 'argon2';
 import { Response } from 'express';
 import { UserService } from 'src/user/user.service';
-import { AuthDto } from './dto/auth.dto';
+import { LoginAuthDto } from './dto/auth.dto';
 import { RegisterAuth } from './dto/register.dto';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class AuthService {
     private userService: UserService,
   ) {}
 
-  public async login(dto: AuthDto) {
+  public async login(dto: LoginAuthDto) {
     const { password, ...user } = await this.validateUser(dto);
     const tokens = this.issueToken(user.id);
 
@@ -48,8 +48,8 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
-  private async validateUser(dto: AuthDto) {
-    const user = await this.userService.getByEmail(dto.email);
+  private async validateUser(dto: LoginAuthDto) {
+    const user = await this.userService.getByLogin(dto.login);
 
     const isValid = await verify(user.password, dto.password);
 
