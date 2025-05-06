@@ -8,6 +8,7 @@ export type TypeUserForm = Omit<IUser, "id"> & { password?: string };
 
 export interface IRegForm {
 	name: string;
+	login: string;
 	number: string;
 	email: string;
 	password: string;
@@ -15,6 +16,7 @@ export interface IRegForm {
 
 export interface IRegisterForm {
 	name: string;
+	login: string;
 	email: string;
 	number: string;
 	password: string;
@@ -28,20 +30,23 @@ export interface IUser {
 	number: string;
 	password: string;
 	login: string;
-	role: number;
+	roleId: number;
 	CreatedAt: string;
 	UpdatedAt: string;
 }
 
 export interface IAuthResponse {
-	id: number;
-	name: string;
-	email: string;
-	login: string;
-	number: string;
-	role: number;
-	password: string;
-	CreatedAt: string;
-	UpdatedAt: string;
 	accessToken: string;
+	user: {
+		id: number;
+		name: string;
+		email: string;
+		login: string;
+		number: string;
+		roleId: number;
+		password: string;
+		CreatedAt: string;
+		UpdatedAt: string;
+		accessToken: string;
+	};
 }

@@ -50,12 +50,17 @@ export const Registration = () => {
 
 	return (
 		<div className='min-h-screen flex items-center justify-center'>
-			<div className='w-full max-w-md p-8 space-y-3 backdrop-blur-lg'>
+			<div className='w-full max-w-md p-8 space-y-3 backdrop-blur-lg text-black'>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<input
 						type='text'
 						placeholder='ФИО'
 						{...register("name", { required: true })}
+					/>
+					<input
+						type='text'
+						placeholder='Логин'
+						{...register("login", { required: true })}
 					/>
 					<input
 						type='email'
